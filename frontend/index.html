@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Navigation (frosted glass bar) -->
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="#home" class="nav-brand" id="navBrand">Portfolio</a>
+        <div class="nav-links" id="navLinks">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#experience">Experience</a>
+            <a href="#education">Education</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <button type="button" class="btn btn-small" id="editToggle">Edit</button>
+    </div>
+</nav>
+
+<main id="app">
+
+    <!-- Loading state -->
+    <section class="state" id="loading">
+        <div class="spinner"></div>
+        <p>Loading your portfolio...</p>
+    </section>
+
+    <!-- Error state -->
+    <section class="state" id="errorBox" hidden>
+        <h2>Something went wrong</h2>
+        <p id="errorText"></p>
+        <button type="button" class="btn" id="retryBtn">Try again</button>
+    </section>
+
+    <!-- First-time setup -->
+    <section class="setup" id="setup" hidden>
+        <div class="setup-card">
+            <h1>Welcome.</h1>
+            <p class="setup-sub">Let's set up your portfolio. Add your details once, and edit them any time from the website.</p>
+            <form id="setupForm" class="form-grid"></form>
+            <p class="form-error" id="setupError" role="alert"></p>
+            <button type="submit" form="setupForm" class="btn btn-wide" id="setupBtn">Create my portfolio</button>
+        </div>
+    </section>
+
+    <!-- The portfolio (built by jQuery from MySQL data) -->
+    <div id="portfolio" hidden>
+
+        <header class="hero" id="home"></header>
+
+        <section class="section" id="about">
+            <div class="container narrow">
+                <h2 class="section-title">About</h2>
+                <p class="about-text" id="aboutText"></p>
+            </div>
+        </section>
+
+        <section class="section section-alt" id="skills">
+            <div class="container">
+                <div class="section-head">
+                    <h2 class="section-title">Skills</h2>
+                    <button type="button" class="btn btn-small edit-only" data-action="add" data-section="skills">+ Add skill</button>
+                </div>
+                <div class="skills-grid" id="skillsList"></div>
+            </div>
+        </section>
+
+        <section class="section" id="experience">
+            <div class="container narrow">
+                <div class="section-head">
+                    <h2 class="section-title">Experience</h2>
+                    <button type="button" class="btn btn-small edit-only" data-action="add" data-section="experience">+ Add experience</button>
+                </div>
+                <div class="timeline" id="experienceList"></div>
+            </div>
+        </section>
+
+        <section class="section section-alt" id="education">
+            <div class="container narrow">
+                <div class="section-head">
+                    <h2 class="section-title">Education</h2>
+                    <button type="button" class="btn btn-small edit-only" data-action="add" data-section="education">+ Add education</button>
+                </div>
+                <div class="timeline" id="educationList"></div>
+            </div>
+        </section>
+
+        <section class="section" id="projects">
+            <div class="container">
+                <div class="section-head">
+                    <h2 class="section-title">Projects</h2>
+                    <button type="button" class="btn btn-small edit-only" data-action="add" data-section="projects">+ Add project</button>
+                </div>
+                <div class="projects-grid" id="projectsList"></div>
+            </div>
+        </section>
+
+        <section class="section section-alt" id="contact">
+            <div class="container narrow">
+                <h2 class="section-title">Contact</h2>
+                <div class="contact-grid" id="contactList"></div>
+                <div class="danger-zone edit-only">
+                    <button type="button" class="btn btn-danger" data-action="reset">Delete entire portfolio</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container" id="footerText">Personal Portfolio · jQuery AJAX, Node.js, Express &amp; MySQL</div>
+</footer>
+
+<!-- Reusable add / edit window -->
+<div class="modal-overlay" id="modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <h2 id="modalTitle"></h2>
+        <form id="modalForm" class="form-grid"></form>
+        <p class="form-error" id="modalError" role="alert"></p>
+        <div class="modal-actions">
+            <button type="button" class="btn btn-light" id="modalCancel">Cancel</button>
+            <button type="submit" form="modalForm" class="btn" id="modalSave">Save</button>
+        </div>
+    </div>
+</div>
+
+<!-- Reusable confirm window -->
+<div class="modal-overlay" id="confirmBox" hidden>
+    <div class="modal modal-small" role="alertdialog" aria-modal="true">
+        <h2>Are you sure?</h2>
+        <p id="confirmText"></p>
+        <div class="modal-actions">
+            <button type="button" class="btn btn-light" id="confirmNo">Cancel</button>
+            <button type="button" class="btn btn-danger" id="confirmYes">Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- Small message that appears at the bottom -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- jQuery CDN first, then our own script -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
